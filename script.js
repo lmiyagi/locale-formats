@@ -3,39 +3,34 @@ const localesArray = ["af-ZA", "am-ET", "ar-AE", "ar-BH", "ar-DZ", "ar-EG", "ar-
 const tableBody = document.querySelector("#localesTable tbody");
 
 localesArray.forEach(localeCode => {
-  try {
-    const locale = new Intl.Locale(localeCode);
-    const row = tableBody.insertRow();
-    const nameCell = row.insertCell();
-    const codeCell = row.insertCell();
-    const timeFormatCell = row.insertCell();
-    const firstDayOfWeekCell = row.insertCell();
-    const fractionSeparatorCell = row.insertCell();
+    try {
+        const locale = new Intl.Locale(localeCode);
+        const row = tableBody.insertRow();
+        const nameCell = row.insertCell();
+        const codeCell = row.insertCell();
+        const timeFormatCell = row.insertCell();
+        const fractionSeparatorCell = row.insertCell();
 
-    nameCell.textContent = new Intl.DisplayNames([localeCode], { type: 'language' }).of(localeCode);
-    codeCell.textContent = locale.baseName;
+        nameCell.textContent = new Intl.DisplayNames([localeCode], { type: 'language' }).of(localeCode);
+        codeCell.textContent = locale.baseName;
 
-    // Time Format (24-hour or AM/PM)
-    const options = { hour: 'numeric', hour12: undefined }; // Let the locale decide
-    const formattedTime = new Intl.DateTimeFormat(locale, options).format(new Date());
-    timeFormatCell.textContent = formattedTime.includes("AM") || formattedTime.includes("PM") ? "AM/PM" : "24-hour";
-
-    // First Day of the Week (Corrected - Using getWeekInfo())
-    const weekInfo = locale.getWeekInfo();
-    const firstDayOfWeek = weekInfo.firstDay;
-    const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    firstDayOfWeekCell.textContent = dayNames[firstDayOfWeek - 1];
+        // Time Format (24-hour or AM/PM)
+        const options = { hour: 'numeric', hour12: undefined };
+        const formattedTime = new Intl.DateTimeFormat(locale, options).format(new Date());
+        timeFormatCell.textContent = formattedTime.includes("AM") || formattedTime.includes("PM") ? "AM/PM" : "24-hour";
 
 
-    // Fraction Separator (No Change)
-    const largeNumber = 1234567.89;
-    fractionSeparatorCell.textContent = largeNumber.toLocaleString(locale);
+        // Fraction Separator (Corrected)
+        const number = 1234567.89;
+        fractionSeparatorCell.textContent = number.toLocaleString(localeCode);
 
-  } catch (error) {
-    console.error(`Error processing locale ${localeCode}:`, error);
-    const row = tableBody.insertRow();
-    const nameCell = row.insertCell();
-    nameCell.colSpan = 5; // Corrected colspan
-    nameCell.textContent = `Error processing locale ${localeCode}`;
-  }
+
+    } catch (error) {
+        console.error(`Error processing locale ${localeCode}:`, error);
+        const row = tableBody.insertRow();
+        const nameCell = row.insertCell();
+        nameCell.colSpan = 4; // Corrected colspan
+        nameCell.textContent = `Error processing locale ${localeCode}`;
+    }
 });
+

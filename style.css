@@ -1,3 +1,4 @@
+/* style.css (no changes needed) */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -13,7 +14,11 @@ th {
   background-color: #f2f2f2;
 }
 
-/* New rule for hover effect */
-tr:hover {
-  background-color: #ffffcc; /* Light yellow */
+ul { /* Style the lists if you want */
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 5px;
 }
